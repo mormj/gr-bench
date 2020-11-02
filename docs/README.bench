@@ -1,0 +1,11 @@
+This is the bench-write-a-block package meant as a guide to building
+out-of-tree packages. To use the bench blocks, the Python namespaces
+is in 'bench', which is imported as:
+
+    import bench
+
+See the Doxygen documentation for details about the blocks available
+in this package. A quick listing of the details can be found in Python
+after importing by using:
+
+    help(bench)
