@@ -1,3 +1,8 @@
+## TODO: Make this script plot with different line series the results of 
+##   a list of files that have the same keys
+##   examples would be the same test run on different hardware or with
+##   different versions of GNU Radio
+
 import json
 from matplotlib import pyplot as plt
 import numpy as np
@@ -5,7 +10,6 @@ import itertools
 from argparse import ArgumentParser
 
 plt_num = 0
-
 def plot_results(args):
     
     filename = args.filename
@@ -96,7 +100,7 @@ def plot_results(args):
 def main():
     parser = ArgumentParser(
         description='Plot the results from a single benchmark run')
-    parser.add_argument('filename', help='Pathname to json results file')
+    parser.add_argument('filenames', help='Pathname to json results file', nargs='+')
     parser.add_argument('-x','--xvar', help='Variable to plot on x axis',required=True)
     parser.add_argument('-y','--yvar', help='Variable to plot on y axis',default='tput')
     parser.add_argument('--xlabel', help='X Axis Label')
