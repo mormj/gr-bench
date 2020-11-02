@@ -8,23 +8,14 @@
 # Title: Not titled yet
 # GNU Radio version: 3.9.0.0-git
 
-from gnuradio import blocks
-from gnuradio import gr
+from gnuradio import gr, blocks, analog
 from gnuradio.filter import firdes
 import sys
 import signal
 from argparse import ArgumentParser
-from gnuradio.eng_arg import eng_float, intx
-from gnuradio import eng_notation
-from gnuradio.fft import window
 import time
-import trt
-import json
-import datetime
-import itertools
 
-
-class benchmark_fft(gr.top_block):
+class benchmark_noise_source(gr.top_block):
 
     def __init__(self, args):
         gr.top_block.__init__(self, "Not titled yet", catch_exceptions=True)
@@ -34,39 +25,27 @@ class benchmark_fft(gr.top_block):
         ##################################################
         nsamples = args.samples
         veclen = args.veclen
-        self.actual_samples = actual_samples = int(nsamples / veclen)
-        num_blocks = args.nblocks
+        actual_samples = int(nsamples / veclen)
+        ntype = args.ntype if args.ntype else analog.GR_GAUSSIAN
 
         ##################################################
         # Blocks
         ##################################################
-        blks = []
-        for i in range(num_blocks):
-            blks.append(
-                blocks.multiply_const_cc(1.0, veclen)
-            )
 
-        self.blocks_null_source_0 = blocks.null_source(
+        src = analog.noise_source_c(ntype, 10.0, 0)
+        snk = blocks.null_sink(
             gr.sizeof_gr_complex*veclen)
-        self.blocks_null_sink_0 = blocks.null_sink(
-            gr.sizeof_gr_complex*veclen)
-        self.blocks_head_0 = blocks.head(
+        head_blk = blocks.head(
             gr.sizeof_gr_complex*veclen, actual_samples)
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_head_0, 0), (blks[0], 0))
-        self.connect((self.blocks_null_source_0, 0), (self.blocks_head_0, 0))
-
-        for i in range(1, num_blocks):
-            self.connect((blks[i-1], 0), (blks[i], 0))
-
-        self.connect((blks[num_blocks-1], 0),
-                     (self.blocks_null_sink_0, 0))
+        self.connect((head_blk, 0), (snk, 0))
+        self.connect((src, 0), (head_blk, 0))
 
 
-def main(top_block_cls=benchmark_fft, options=None):
+def main(top_block_cls=benchmark_noise_source, options=None):
 
     parser = ArgumentParser(
         description='Run a flowgraph iterating over parameters for benchmarking')
@@ -74,7 +53,7 @@ def main(top_block_cls=benchmark_fft, options=None):
         '--rt_prio', help='enable realtime scheduling', action='store_true')
     parser.add_argument('--samples', type=int, default=1e9)
     parser.add_argument('--veclen', type=int, default=1)
-    parser.add_argument('--nblocks', type=int, default=1)
+    parser.add_argument('--ntype', type=int)
 
     args = parser.parse_args()
     print(args)

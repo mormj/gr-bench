@@ -8,71 +8,74 @@
 # Title: Not titled yet
 # GNU Radio version: 3.9.0.0-git
 
-from gnuradio import blocks
-from gnuradio import gr
-from gnuradio.filter import firdes
+from gnuradio import gr, blocks, fft
 import sys
 import signal
 from argparse import ArgumentParser
-from gnuradio.eng_arg import eng_float, intx
-from gnuradio import eng_notation
-from gnuradio.fft import window
 import time
-import trt
-import json
-import datetime
-import itertools
+from gnuradio.fft import window
 
 
-class benchmark_copy(gr.top_block):
+class benchmark_fft(gr.top_block):
 
     def __init__(self, args):
-        gr.top_block.__init__(self, "Benchmark Copy", catch_exceptions=True)
+        gr.top_block.__init__(self, "Benchmark FFT", catch_exceptions=True)
 
         ##################################################
         # Variables
         ##################################################
         nsamples = args.samples
-        veclen = args.veclen
-        self.actual_samples = actual_samples = int(nsamples /  veclen)
+        fft_size = args.fftsize
+        actual_samples = int(nsamples /  fft_size)
         num_blocks = args.nblocks
+        win = args.window if hasattr(args,'window') and args.window else ''
+
+        # Apply window equal to FFT Size
+        fftwin = []
+        if win.lower() == 'blackmanharris':
+            fftwin = window.blackman_harris(fft_size)
+        elif win.lower().startswith('rect'):
+            fftwin = window.rectangular(fft_size)
+        elif win.lower() == 'hamming':
+            fftwin = window.hamming(fft_size)
 
         ##################################################
         # Blocks
         ##################################################
-        copy_blocks = []
+        blks = []
         for i in range(num_blocks):
-            copy_blocks.append(
-                blocks.copy(
-                    gr.sizeof_gr_complex * veclen)
+            blks.append(
+                fft.fft_vcc(
+                    fft_size, True, fftwin)
             )
 
         self.blocks_null_source_0 = blocks.null_source(
-            gr.sizeof_gr_complex*veclen)
+            gr.sizeof_gr_complex*fft_size)
         self.blocks_null_sink_0 = blocks.null_sink(
-            gr.sizeof_gr_complex*veclen)
+            gr.sizeof_gr_complex*fft_size)
         self.blocks_head_0 = blocks.head(
-            gr.sizeof_gr_complex*veclen, actual_samples)
+            gr.sizeof_gr_complex*fft_size, actual_samples)
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_head_0, 0), (copy_blocks[0], 0))
+        self.connect((self.blocks_head_0, 0), (blks[0], 0))
         self.connect((self.blocks_null_source_0, 0), (self.blocks_head_0, 0))
 
         for i in range(1, num_blocks):
-            self.connect((copy_blocks[i-1], 0), (copy_blocks[i], 0))
+            self.connect((blks[i-1], 0), (blks[i], 0))
 
-        self.connect((copy_blocks[num_blocks-1], 0),
+        self.connect((blks[num_blocks-1], 0),
                      (self.blocks_null_sink_0, 0))
 
 
-def main(top_block_cls=benchmark_copy, options=None):
+def main(top_block_cls=benchmark_fft, options=None):
 
     parser = ArgumentParser(description='Run a flowgraph iterating over parameters for benchmarking')
     parser.add_argument('--rt_prio', help='enable realtime scheduling', action='store_true')
-    parser.add_argument('--samples', type=int, default=1e9)
-    parser.add_argument('--veclen', type=int, default=1)
+    parser.add_argument('--samples', type=int, default=2e8)
+    parser.add_argument('--fftsize', type=int, default=1)
+    parser.add_argument('--window', type=int)
     parser.add_argument('--nblocks', type=int, default=1)
 
     args = parser.parse_args()

@@ -8,43 +8,35 @@
 # Title: Not titled yet
 # GNU Radio version: 3.9.0.0-git
 
-from gnuradio import blocks
-from gnuradio import gr
+from gnuradio import gr, blocks
 from gnuradio.filter import firdes
 import sys
 import signal
 from argparse import ArgumentParser
-from gnuradio.eng_arg import eng_float, intx
-from gnuradio import eng_notation
-from gnuradio.fft import window
 import time
-import trt
-import json
-import datetime
-import itertools
 
 
-class benchmark_copy(gr.top_block):
+class benchmark_multiply_const(gr.top_block):
 
     def __init__(self, args):
-        gr.top_block.__init__(self, "Benchmark Copy", catch_exceptions=True)
+        gr.top_block.__init__(
+            self, "Benchmark Multiply Const", catch_exceptions=True)
 
         ##################################################
         # Variables
         ##################################################
         nsamples = args.samples
         veclen = args.veclen
-        self.actual_samples = actual_samples = int(nsamples /  veclen)
+        self.actual_samples = actual_samples = int(nsamples / veclen)
         num_blocks = args.nblocks
 
         ##################################################
         # Blocks
         ##################################################
-        copy_blocks = []
+        blks = []
         for i in range(num_blocks):
-            copy_blocks.append(
-                blocks.copy(
-                    gr.sizeof_gr_complex * veclen)
+            blks.append(
+                blocks.multiply_const_cc(1.0, veclen)
             )
 
         self.blocks_null_source_0 = blocks.null_source(
@@ -57,20 +49,22 @@ class benchmark_copy(gr.top_block):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_head_0, 0), (copy_blocks[0], 0))
+        self.connect((self.blocks_head_0, 0), (blks[0], 0))
         self.connect((self.blocks_null_source_0, 0), (self.blocks_head_0, 0))
 
         for i in range(1, num_blocks):
-            self.connect((copy_blocks[i-1], 0), (copy_blocks[i], 0))
+            self.connect((blks[i-1], 0), (blks[i], 0))
 
-        self.connect((copy_blocks[num_blocks-1], 0),
+        self.connect((blks[num_blocks-1], 0),
                      (self.blocks_null_sink_0, 0))
 
 
-def main(top_block_cls=benchmark_copy, options=None):
+def main(top_block_cls=benchmark_multiply_const, options=None):
 
-    parser = ArgumentParser(description='Run a flowgraph iterating over parameters for benchmarking')
-    parser.add_argument('--rt_prio', help='enable realtime scheduling', action='store_true')
+    parser = ArgumentParser(
+        description='Run a flowgraph iterating over parameters for benchmarking')
+    parser.add_argument(
+        '--rt_prio', help='enable realtime scheduling', action='store_true')
     parser.add_argument('--samples', type=int, default=1e9)
     parser.add_argument('--veclen', type=int, default=1)
     parser.add_argument('--nblocks', type=int, default=1)
@@ -99,6 +93,7 @@ def main(top_block_cls=benchmark_copy, options=None):
     endt = time.time()
 
     print(f'[PROFILE_TIME]{endt-startt}[PROFILE_TIME]')
+
 
 if __name__ == '__main__':
     main()
