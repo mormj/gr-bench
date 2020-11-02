@@ -4,8 +4,10 @@ import numpy as np
 import itertools
 from argparse import ArgumentParser
 
+plt_num = 0
 
 def plot_results(args):
+    
     filename = args.filename
 
     # Opening JSON file
@@ -30,6 +32,7 @@ def plot_results(args):
         fig_vars = None
 
     def gen_plot(filt_data, title):
+        global plt_num
         plt.figure()
         if args.title:
             plt.title(args.title + ": " + title)
@@ -65,7 +68,11 @@ def plot_results(args):
 
             plt.legend(lgnd)
 
-        plt.show()
+        if (args.save):
+            plt.savefig( filename + str(plt_num) + ".png")
+            plt_num += 1
+        else:
+            plt.show()
     
     if fig_vars == None:
         gen_plot(data,'')
