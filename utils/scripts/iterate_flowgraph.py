@@ -16,6 +16,7 @@ import json
 import datetime
 import re
 import os 
+import pathlib
 
 def rangepair(arg):
     pairstr = arg.split(':')
@@ -29,6 +30,7 @@ parser.add_argument('pathname', help='Pathname to flowgraph to run')
 parser.add_argument('--vars', help='named variables and their associate ranges to iterate over', type=rangepair, nargs='+')
 parser.add_argument('--cpuset', default='2,3,6,7', help='cpuset to utilize')
 parser.add_argument('--userset', default='sdr', help='cpuset to utilize')
+parser.add_argument('--python_exe', default='/usr/bin/python3')
 
 args = parser.parse_args()
 print(args)
@@ -37,7 +39,7 @@ varnames = [y[0] for y in args.vars]
 varvalues = [y[1] for y in args.vars]
 
 
-pattern = r'\[PROFILE\](.*)\[PROFILE\]'
+pattern = r'\[PROFILE_TIME\](.*)\[PROFILE_TIME\]'
 
 params = {}
 params['operation'] = args.operation
@@ -49,8 +51,10 @@ json_output['params'] = params
 res = []
 json_output['results'] = res
 
+results_path = os.path.join(pathlib.Path(__file__).parent.absolute(),'results')
+
 dtstr = datetime.datetime.today()
-results_filename = f'benchmark_newsched_{os.path.split(params["pathname"])[-1]}_results_{dtstr:%y%d%m_%H%M%S}.json'
+results_filename = os.path.join(results_path,f'gr-bench_{os.path.split(params["pathname"])[-1]}_results_{dtstr:%y%d%m_%H%M%S}.json')
 
 for x in itertools.product(*varvalues):
     if (args.operation == "time"):
@@ -58,9 +62,10 @@ for x in itertools.product(*varvalues):
     elif (args.operation == "migrations"):
         shellcmd = ['perf', 'record', '-C', '2,3,6,7', '-o', 'migrations_rt.dat', '-m', '32768', '-e', 'sched:sched_migrate_task' ,'--', 'cset', 'shield', '--userset=sdr', '--exec', '--']
 
-
     r = {}
 
+    if (args.pathname.split('.')[-1] == 'py'):
+        shellcmd.append(args.python_exe)    
     shellcmd.append(args.pathname)
     for (n,v) in zip(varnames,x):
         r[n] = v
