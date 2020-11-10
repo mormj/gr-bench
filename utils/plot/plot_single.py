@@ -26,11 +26,12 @@ def plot_results(args):
             d['tput'] = (d['samples'] / float(d['time']) ) / 1.0e6
         fig_vars = fig_vars[fig_vars != 'samples']
         fig_vars = fig_vars[fig_vars != 'time']
-    for s in args.series:
-        fig_vars = fig_vars[fig_vars != s]
+    if args.series:
+        for s in args.series:
+            fig_vars = fig_vars[fig_vars != s]
 
-    if not fig_vars:
-        fig_vars = None
+    # if fig_vars == []:
+    #     fig_vars = None
 
     def gen_plot(filt_data, title):
         global plt_num
@@ -45,7 +46,19 @@ def plot_results(args):
         if not args.series:
             x = [d[args.xvar] for d in filt_data]
             y = [d[args.yvar] for d in filt_data]
-            plt.plot(x, y)
+
+            x_vals = list(np.unique(x))
+            y_mean = []
+            for xx in x_vals:
+                idx_at_val = [i for i, a in enumerate(x) if a == xx]
+                for idx in idx_at_val:
+                    plt.plot(x[idx], y[idx], color=colors(0),
+                            marker=args.marker)
+
+                y_at_val = [y[i] for i in idx_at_val]
+                y_mean.append(np.mean(y_at_val))
+
+            h, = plt.plot(x_vals, y_mean)
 
         else:
             svals = []
@@ -93,7 +106,7 @@ def plot_results(args):
         else:
             plt.show()
     
-    if fig_vars == None:
+    if fig_vars == []:
         gen_plot(data,'')
     else:
         fvals = []
