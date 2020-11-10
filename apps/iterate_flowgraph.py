@@ -28,6 +28,7 @@ parser = argparse.ArgumentParser(description='Run a flowgraph iterating over par
 parser.add_argument('operation', choices=['time','migrations','resched','flamegraph'], default='time')
 parser.add_argument('pathname', help='Pathname to flowgraph to run')
 parser.add_argument('--vars', help='named variables and their associate ranges to iterate over', type=rangepair, nargs='+')
+parser.add_argument('--iters', type=int, default=1, help='cpuset to utilize')
 parser.add_argument('--cpuset', default='2,3,6,7', help='cpuset to utilize')
 parser.add_argument('--userset', default='sdr', help='cpuset to utilize')
 parser.add_argument('--python_exe', default='/usr/bin/python3')
@@ -76,23 +77,25 @@ for x in itertools.product(*varvalues):
             shellcmd.append('--' + n)
             shellcmd.append(str(v))
             
-    print(' '.join(shellcmd))
-    myshell = subprocess.Popen(shellcmd, 
-                stdout=subprocess.PIPE, 
-                stderr=subprocess.STDOUT)
-    stdout,stderr = myshell.communicate()
-    time = re.search(pattern,str(stdout)).group(1)
-    r['time'] = time
-    r['tput'] = r['samples'] / float(time)
-    for l in str(stdout).split('\\n'):
-        print(l)
+    for it in range(args.iters):
+        print(' '.join(shellcmd))
+        myshell = subprocess.Popen(shellcmd, 
+                    stdout=subprocess.PIPE, 
+                    stderr=subprocess.STDOUT)
+        stdout,stderr = myshell.communicate()
+        time = re.search(pattern,str(stdout)).group(1)
+        r2 = r.copy()
+        r2['time'] = time
+        r2['tput'] = r2['samples'] / float(time)
+        for l in str(stdout).split('\\n'):
+            print(l)
 
-    res.append(r)
-    with open(results_filename, 'w') as json_file:
-        json.dump(json_output, json_file)
+        res.append(r2)
+        with open(results_filename, 'w') as json_file:
+            json.dump(json_output, json_file)
 
 
-        # print(str(stdout[0]).split('\\n'))
+            # print(str(stdout[0]).split('\\n'))
 
 
 

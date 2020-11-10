@@ -5,6 +5,7 @@ import itertools
 from argparse import ArgumentParser
 
 plt_num = 0
+colors = plt.get_cmap("tab10")
 
 def plot_results(args):
     
@@ -52,7 +53,10 @@ def plot_results(args):
                 svals.append(np.unique([d[s] for d in filt_data]))
                 
             lgnd = []
+            lgnd_handles = []
+            coloridx = 0
             for b in itertools.product(*svals):
+                color = colors(coloridx)
                 series_filt = filt_data
                 
                 lgnd_str = ''
@@ -62,12 +66,27 @@ def plot_results(args):
 
                 lgnd_str = lgnd_str[:-1] if lgnd_str[-1] == ',' else lgnd_str
                 lgnd.append(lgnd_str)
+
                 x = [d[args.xvar] for d in series_filt]
                 y = [d[args.yvar] for d in series_filt]
-                plt.plot(x, y, marker=args.marker)
 
-            plt.legend(lgnd)
+                x_vals = list(np.unique(x))
+                y_mean = []
+                for xx in x_vals:
+                    idx_at_val = [i for i, a in enumerate(x) if a == xx]
+                    for idx in idx_at_val:
+                        plt.plot(x[idx], y[idx], color=color,
+                                marker=args.marker)
 
+                    y_at_val = [y[i] for i in idx_at_val]
+                    y_mean.append(np.mean(y_at_val))
+
+                h, = plt.plot(x_vals, y_mean)
+                lgnd_handles.append(h)
+                coloridx += 1
+
+            plt.legend(lgnd_handles,lgnd)
+  
         if (args.save):
             plt.savefig( filename + str(plt_num) + ".png")
             plt_num += 1
