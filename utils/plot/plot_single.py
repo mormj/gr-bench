@@ -121,7 +121,8 @@ def plot_results(args):
                 fig_filt  = [d for d in fig_filt if d[s] == b[cnt]]                  
                 title_str += f'{s}={b[cnt]},'
 
-            title_str = title_str[:-1] if title_str[-1] == ',' else title_str
+            if title_str:
+                title_str = title_str[:-1] if title_str[-1] == ',' else title_str
             gen_plot(fig_filt, title_str)
 
 

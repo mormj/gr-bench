@@ -98,4 +98,4 @@ for x in itertools.product(*varvalues):
             # print(str(stdout[0]).split('\\n'))
 
 
-print('To plot, run: \n ' + 'python3 ' + os.path.abspath(os.path.join(__file__,'..','utils','plot','plot_single.py')) + ' ' + os.path.abspath(results_filename) + ' -x nblocks -y tput')
+print('To plot, run: \n ' + 'python3 ' + os.path.abspath(os.path.join(__file__,'..','..','utils','plot','plot_single.py')) + ' ' + os.path.abspath(results_filename) + ' -x nblocks -y tput')
