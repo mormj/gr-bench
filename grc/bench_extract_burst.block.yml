@@ -1,0 +1,22 @@
+id: bench_extract_burst
+label: Extract Bursts
+category: '[Bench]'
+templates:
+  imports: import bench
+  make: bench.extract_burst(${burst_length})
+parameters:
+- id: burst_length
+  label: Burst Length
+  dtype: int
+inputs:
+- label: in
+  domain: stream
+  dtype: complex
+- label: peak
+  domain: stream
+  dtype: byte
+outputs:
+- label: out
+  domain: stream
+  dtype: complex
+file_format: 1

@@ -11,5 +11,5 @@
 ########################################################################
 install(FILES
     api.h
-    DESTINATION include/bench
+    extract_burst.h DESTINATION include/bench
 )

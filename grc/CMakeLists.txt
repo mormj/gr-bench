@@ -7,5 +7,5 @@
 #
 
 install(FILES
-    DESTINATION share/gnuradio/grc/blocks
+    bench_extract_burst.block.yml DESTINATION share/gnuradio/grc/blocks
 )
