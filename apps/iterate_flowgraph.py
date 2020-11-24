@@ -32,6 +32,7 @@ parser.add_argument('--iters', type=int, default=1, help='cpuset to utilize')
 parser.add_argument('--cpuset', default='2,3,6,7', help='cpuset to utilize')
 parser.add_argument('--userset', default='sdr', help='cpuset to utilize')
 parser.add_argument('--python_exe', default='/usr/bin/python3')
+parser.add_argument('--noshield', action='store_false')
 
 args = parser.parse_args()
 print(args)
@@ -62,8 +63,11 @@ results_filename = os.path.join(results_path,f'{os.path.split(params["pathname"]
 
 for x in itertools.product(*varvalues):
     if (args.operation == "time"):
-        #shellcmd = ['cset', 'shield', '--userset=sdr', '--exec', '--']
-        shellcmd = []
+        if (args.noshield):
+            shellcmd = []
+        else:
+            shellcmd = ['cset', 'shield', '--userset=sdr', '--exec', '--']
+        
     elif (args.operation == "migrations"):
         shellcmd = ['perf', 'record', '-C', '2,3,6,7', '-o', 'migrations_rt.dat', '-m', '32768', '-e', 'sched:sched_migrate_task' ,'--', 'cset', 'shield', '--userset=sdr', '--exec', '--']
 
