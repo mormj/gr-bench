@@ -40,7 +40,8 @@ varnames = [y[0] for y in args.vars]
 varvalues = [y[1] for y in args.vars]
 
 
-pattern = r'\[PROFILE_TIME\](.*)\[PROFILE_TIME\]'
+# pattern = r'\[PROFILE_TIME\](.*)\[PROFILE_TIME\]'
+pattern = r'\[PROFILE_([a-zA-Z0-9]+)\](\d+\.?\d*)\[PROFILE_([a-zA-Z0-9]+)\]'
 
 params = {}
 params['operation'] = args.operation
@@ -53,13 +54,16 @@ res = []
 json_output['results'] = res
 
 results_path = os.path.join(pathlib.Path(__file__).parent.absolute(),'results')
+if (not os.path.exists(results_path)):
+    os.makedirs(results_path)
 
 dtstr = datetime.datetime.today()
-results_filename = os.path.join(results_path,f'gr-bench_{os.path.split(params["pathname"])[-1]}_results_{dtstr:%y%d%m_%H%M%S}.json')
+results_filename = os.path.join(results_path,f'{os.path.split(params["pathname"])[-1]}_results_{dtstr:%y%d%m_%H%M%S}.json')
 
 for x in itertools.product(*varvalues):
     if (args.operation == "time"):
-        shellcmd = ['cset', 'shield', '--userset=sdr', '--exec', '--']
+        #shellcmd = ['cset', 'shield', '--userset=sdr', '--exec', '--']
+        shellcmd = []
     elif (args.operation == "migrations"):
         shellcmd = ['perf', 'record', '-C', '2,3,6,7', '-o', 'migrations_rt.dat', '-m', '32768', '-e', 'sched:sched_migrate_task' ,'--', 'cset', 'shield', '--userset=sdr', '--exec', '--']
 
@@ -83,10 +87,19 @@ for x in itertools.product(*varvalues):
                     stdout=subprocess.PIPE, 
                     stderr=subprocess.STDOUT)
         stdout,stderr = myshell.communicate()
-        time = re.search(pattern,str(stdout)).group(1)
+        # time = re.search(pattern,str(stdout)).group(1)
+        rr = re.findall(pattern, str(stdout))
         r2 = r.copy()
-        r2['time'] = time
-        r2['tput'] = r2['samples'] / float(time)
+        for m in rr:
+            varname = m[0].lower()
+            varval = m[1]
+            r2[varname] = varval
+
+            # # This logic just needs to be added generically to the plotting scripts
+            # if varname == 'time':
+            #     r2['tput'] = r2['samples'] / float(varval)
+            # if varname == 'bytes':
+            #     r2['data_tput'] = float(varval) / float(r2['time'])
         for l in str(stdout).split('\\n'):
             print(l)
 
