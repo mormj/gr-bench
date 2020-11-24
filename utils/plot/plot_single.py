@@ -26,6 +26,25 @@ def plot_results(args):
             d['tput'] = (d['samples'] / float(d['time']) ) / 1.0e6
         fig_vars = fig_vars[fig_vars != 'samples']
         fig_vars = fig_vars[fig_vars != 'time']
+        fig_vars = fig_vars[fig_vars != 'bytes']
+        fig_vars = fig_vars[fig_vars != 'data_tput']
+    if args.yvar == 'data_tput':
+        for d in data:
+            d['data_tput'] = 8.0 * (float(d['bytes']) / float(d['time']) ) / 1.0e6
+        fig_vars = fig_vars[fig_vars != 'samples']
+        fig_vars = fig_vars[fig_vars != 'time']
+        fig_vars = fig_vars[fig_vars != 'bytes']
+        fig_vars = fig_vars[fig_vars != 'data_tput']
+        fig_vars = fig_vars[fig_vars != 'tput']
+    if args.yvar == 'bitspersample':
+        for d in data:
+            d['bitspersample'] = 8.0 * (float(d['bytes']) / float(d['samples']) ) 
+        fig_vars = fig_vars[fig_vars != 'samples']
+        fig_vars = fig_vars[fig_vars != 'time']
+        fig_vars = fig_vars[fig_vars != 'bytes']
+        fig_vars = fig_vars[fig_vars != 'data_tput']
+        fig_vars = fig_vars[fig_vars != 'bitspersample']
+        fig_vars = fig_vars[fig_vars != 'tput']
     if args.series:
         for s in args.series:
             fig_vars = fig_vars[fig_vars != s]
