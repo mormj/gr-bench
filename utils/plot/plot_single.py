@@ -63,8 +63,8 @@ def plot_results(args):
         plt.ylabel(args.yvar if not args.ylabel else args.ylabel)
 
         if not args.series:
-            x = [d[args.xvar] for d in filt_data]
-            y = [d[args.yvar] for d in filt_data]
+            x = [float(d[args.xvar]) for d in filt_data]
+            y = [float(d[args.yvar]) for d in filt_data]
 
             x_vals = list(np.unique(x))
             y_mean = []
@@ -99,8 +99,8 @@ def plot_results(args):
                 lgnd_str = lgnd_str[:-1] if lgnd_str[-1] == ',' else lgnd_str
                 lgnd.append(lgnd_str)
 
-                x = [d[args.xvar] for d in series_filt]
-                y = [d[args.yvar] for d in series_filt]
+                x = [float(d[args.xvar]) for d in series_filt]
+                y = [float(d[args.yvar]) for d in series_filt]
 
                 x_vals = list(np.unique(x))
                 y_mean = []

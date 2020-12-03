@@ -32,7 +32,7 @@ parser.add_argument('--iters', type=int, default=1, help='cpuset to utilize')
 parser.add_argument('--cpuset', default='2,3,6,7', help='cpuset to utilize')
 parser.add_argument('--userset', default='sdr', help='cpuset to utilize')
 parser.add_argument('--python_exe', default='/usr/bin/python3')
-parser.add_argument('--noshield', action='store_false')
+parser.add_argument('--noshield', action='store_true')
 
 args = parser.parse_args()
 print(args)
