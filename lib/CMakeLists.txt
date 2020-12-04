@@ -11,7 +11,10 @@
 ########################################################################
 include(GrPlatform) #define LIB_SUFFIX
 list(APPEND bench_sources
-    extract_burst_impl.cc )
+    extract_burst_impl.cc
+    nop_impl.cc
+    nop_source_impl.cc
+    nop_head_impl.cc )
 
 set(bench_sources "${bench_sources}" PARENT_SCOPE)
 if(NOT bench_sources)

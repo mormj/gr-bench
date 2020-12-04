@@ -22,6 +22,9 @@ namespace py = pybind11;
 /**************************************/
 // BINDING_FUNCTION_PROTOTYPES(
 void bind_extract_burst(py::module& m);
+    void bind_nop(py::module& m);
+    void bind_nop_source(py::module& m);
+    void bind_nop_head(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -51,5 +54,8 @@ PYBIND11_MODULE(bench_python, m)
     /**************************************/
     // BINDING_FUNCTION_CALLS(
     bind_extract_burst(m);
+    bind_nop(m);
+    bind_nop_source(m);
+    bind_nop_head(m);
     // ) END BINDING_FUNCTION_CALLS
 }

@@ -29,7 +29,10 @@ include(GrPybind)
 ########################################################################
 
 list(APPEND bench_python_files
-    extract_burst_python.cc python_bindings.cc)
+    extract_burst_python.cc
+    nop_python.cc
+    nop_source_python.cc
+    nop_head_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(bench 
    ../..

@@ -74,7 +74,26 @@ ENDIF()
 # Install directories
 ########################################################################
 include(FindPkgConfig)
-find_package(Gnuradio "3.9" REQUIRED)
+# find_package(Gnuradio "3.9" REQUIRED)
+find_package(Gnuradio "3.9" COMPONENTS
+    blocks
+    # fec
+    # fft
+    # filter
+    # analog
+    # digital
+    # dtv
+    # audio
+    # channels
+    # qtgui
+    # trellis
+    # uhd
+    # video-sdl
+    # vocoder
+    # wavelet
+    # zeromq
+    # network
+)
 include(GrVersion)
 
 include(GrPlatform) #define LIB_SUFFIX
@@ -155,6 +174,7 @@ add_subdirectory(apps)
 add_subdirectory(docs)
 add_subdirectory(python)
 add_subdirectory(grc)
+add_subdirectory(bench)
 
 ########################################################################
 # Install cmake search helper for this library

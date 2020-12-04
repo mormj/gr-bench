@@ -11,5 +11,8 @@
 ########################################################################
 install(FILES
     api.h
-    extract_burst.h DESTINATION include/bench
+    extract_burst.h
+    nop.h
+    nop_source.h
+    nop_head.h DESTINATION include/bench
 )
