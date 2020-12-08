@@ -1,0 +1,15 @@
+id: bench_sequential_validate_sink
+label: sequential validate sink
+category: '[bench]'
+templates:
+  imports: import bench
+  make: bench.sequential_validate_sink(${rollover_value})
+parameters:
+- id: rollover_value
+  label: Rollover_value
+  dtype: int
+inputs:
+- label: in
+  domain: stream
+  dtype: raw
+file_format: 1

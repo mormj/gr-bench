@@ -14,5 +14,8 @@ install(FILES
     extract_burst.h
     nop.h
     nop_source.h
-    nop_head.h DESTINATION include/bench
+    nop_head.h
+    random_copy.h
+    sequential_validate_sink.h
+    seqval_c.h DESTINATION include/bench
 )

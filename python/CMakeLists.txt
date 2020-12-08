@@ -32,3 +32,6 @@ include(GrTest)
 
 set(GR_TEST_TARGET_DEPS gnuradio-bench)
 GR_ADD_TEST(qa_extract_burst ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_extract_burst.py)
+GR_ADD_TEST(qa_random_copy ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_random_copy.py)
+GR_ADD_TEST(qa_sequential_validate_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_sequential_validate_sink.py)
+GR_ADD_TEST(qa_seqval_c ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_seqval_c.py)

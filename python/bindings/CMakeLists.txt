@@ -27,12 +27,14 @@ include(GrPybind)
 ########################################################################
 # Python Bindings
 ########################################################################
-
 list(APPEND bench_python_files
     extract_burst_python.cc
     nop_python.cc
     nop_source_python.cc
-    nop_head_python.cc python_bindings.cc)
+    nop_head_python.cc
+    random_copy_python.cc
+    sequential_validate_sink_python.cc
+    seqval_c_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(bench 
    ../..

@@ -14,7 +14,10 @@ list(APPEND bench_sources
     extract_burst_impl.cc
     nop_impl.cc
     nop_source_impl.cc
-    nop_head_impl.cc )
+    nop_head_impl.cc
+    random_copy_impl.cc
+    sequential_validate_sink_impl.cc
+    seqval_c_impl.cc )
 
 set(bench_sources "${bench_sources}" PARENT_SCOPE)
 if(NOT bench_sources)

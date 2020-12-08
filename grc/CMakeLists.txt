@@ -5,10 +5,12 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
-
 install(FILES
     bench_extract_burst.block.yml
     bench_nop.block.yml
     bench_nop_source.block.yml
-    bench_nop_head.block.yml DESTINATION share/gnuradio/grc/blocks
+    bench_nop_head.block.yml
+    bench_random_copy.block.yml
+    bench_sequential_validate_sink.block.yml
+    bench_seqval_c.block.yml DESTINATION share/gnuradio/grc/blocks
 )

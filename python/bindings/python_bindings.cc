@@ -25,6 +25,9 @@ void bind_extract_burst(py::module& m);
     void bind_nop(py::module& m);
     void bind_nop_source(py::module& m);
     void bind_nop_head(py::module& m);
+    void bind_random_copy(py::module& m);
+    void bind_sequential_validate_sink(py::module& m);
+    void bind_seqval_c(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -57,5 +60,8 @@ PYBIND11_MODULE(bench_python, m)
     bind_nop(m);
     bind_nop_source(m);
     bind_nop_head(m);
+    bind_random_copy(m);
+    bind_sequential_validate_sink(m);
+    bind_seqval_c(m);
     // ) END BINDING_FUNCTION_CALLS
 }

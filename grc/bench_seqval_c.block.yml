@@ -1,0 +1,15 @@
+id: bench_seqval_c
+label: seqval c
+category: '[bench]'
+templates:
+  imports: import bench
+  make: bench.seqval_c(${rollover_val})
+parameters:
+- id: rollover_val
+  label: Rollover_val
+  dtype: int
+inputs:
+- label: in
+  domain: stream
+  dtype: complex
+file_format: 1
