@@ -113,7 +113,7 @@ def plot_results(args):
                 coloridx += 1
 
         plt.legend(lgnd_handles,lgnd)
-
+        plt.yscale("log")
         if (args.save):
             plt.savefig( filename + str(plt_num) + ".png")
             plt_num += 1

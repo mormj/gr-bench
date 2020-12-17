@@ -49,6 +49,13 @@ def plot_results(args):
         for s in args.series:
             fig_vars = fig_vars[fig_vars != s]
 
+    # go through the fig vars, and if there is only 1 value, then remove it from the fig vars
+    fig_vars = [f for f in fig_vars if len(np.unique([d[f] for d in data if f in d])) > 1]
+
+    # if all the values are different (e.g. time) don't use that as a fig var
+    fig_vars = [f for f in fig_vars if len(np.unique([d[f] for d in data if f in d])) != len(data)]
+
+
     # if fig_vars == []:
     #     fig_vars = None
 
