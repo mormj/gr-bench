@@ -42,7 +42,7 @@ varvalues = [y[1] for y in args.vars]
 
 
 # pattern = r'\[PROFILE_TIME\](.*)\[PROFILE_TIME\]'
-pattern = r'\[PROFILE_([a-zA-Z0-9]+)\](\d+\.?\d*)\[PROFILE_([a-zA-Z0-9]+)\]'
+pattern = r'\[PROFILE_([a-zA-Z0-9]+)\](-?\d+\.?\d*)\[PROFILE_([a-zA-Z0-9]+)\]'
 
 params = {}
 params['operation'] = args.operation
