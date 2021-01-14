@@ -9,6 +9,17 @@ target_link_libraries(bm_nop
   gnuradio-bench
   )
 
+add_executable(bm_copy bm_copy.cpp)
+target_include_directories(bm_nop
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
+  PUBLIC $<INSTALL_INTERFACE:include>
+)
+target_link_libraries(bm_copy
+  gnuradio::gnuradio-runtime
+  gnuradio::gnuradio-blocks
+  gnuradio-bench
+  )
+
 add_executable(bm_pmt_serialize_uvec bm_pmt_serialize_uvec.cpp)
 target_include_directories(bm_pmt_serialize_uvec
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>

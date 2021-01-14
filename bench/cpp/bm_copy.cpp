@@ -6,10 +6,10 @@ namespace po = boost::program_options;
 
 #include <gnuradio/realtime.h>
 #include <gnuradio/top_block.h>
-#include <bench/nop_source.h>
+#include <gnuradio/blocks/null_source.h>
 #include <gnuradio/blocks/null_sink.h>
-#include <bench/nop.h>
-#include <bench/nop_head.h>
+#include <gnuradio/blocks/copy.h>
+#include <gnuradio/blocks/head.h>
 
 using namespace gr;
 
@@ -51,22 +51,22 @@ int main(int argc, char* argv[])
     }
 
     {
-        auto src = bench::nop_source::make(sizeof(gr_complex) * veclen);
-        auto head = bench::nop_head::make(sizeof(gr_complex) * veclen, samples / veclen);
+        auto src = blocks::null_source::make(sizeof(gr_complex) * veclen);
+        auto head = blocks::head::make(sizeof(gr_complex) * veclen, samples / veclen);
         auto snk = blocks::null_sink::make(sizeof(gr_complex) * veclen);
-        std::vector<bench::nop::sptr> nop_blks(nblocks);
+        std::vector<blocks::copy::sptr> copy_blks(nblocks);
         for (int i = 0; i < nblocks; i++) {
-            nop_blks[i] = bench::nop::make(sizeof(gr_complex) * veclen);
+            copy_blks[i] = blocks::copy::make(sizeof(gr_complex) * veclen);
         }
         
         auto fg = make_top_block("nop_flowgraph");
 
         fg->connect(src, 0, head, 0);
-        fg->connect(head, 0, nop_blks[0], 0);
+        fg->connect(head, 0, copy_blks[0], 0);
         for (int i = 0; i < nblocks - 1; i++) {
-            fg->connect(nop_blks[i], 0, nop_blks[i + 1], 0);
+            fg->connect(copy_blks[i], 0, copy_blks[i + 1], 0);
         }
-        fg->connect(nop_blks[nblocks - 1], 0, snk, 0);
+        fg->connect(copy_blks[nblocks - 1], 0, snk, 0);
 
         auto t1 = std::chrono::steady_clock::now();
 
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
 
         std::cout << "[PROFILE_TIME]" << time << "[PROFILE_TIME]" << std::endl;
         // for (int i = 0; i < nblocks; i++) {
-        //     std::cout << "nout_avg: " << nop_blks[i]->pc_noutput_items_avg() << std::endl;
+        //     std::cout << "nout_avg: " << copy_blks[i]->pc_noutput_items_avg() << std::endl;
         // }
         
     }

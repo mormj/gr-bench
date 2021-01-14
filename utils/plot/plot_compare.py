@@ -113,7 +113,12 @@ def plot_results(args):
                 coloridx += 1
 
         plt.legend(lgnd_handles,lgnd)
-        plt.yscale("log")
+        # plt.yscale("log")
+        if args.xlim:
+            plt.xlim(args.xlim)
+        if args.ylim:
+            plt.ylim(args.ylim)
+
         if (args.save):
             plt.savefig( filename + str(plt_num) + ".png")
             plt_num += 1
@@ -148,6 +153,8 @@ def main():
     parser.add_argument('-y','--yvar', help='Variable to plot on y axis',default='tput')
     parser.add_argument('--xlabel', help='X Axis Label')
     parser.add_argument('--ylabel', help='Y Axis Label',default='Throughput (Msps)')
+    parser.add_argument('--xlim', help='X Axis Limits', nargs=2, type=float)
+    parser.add_argument('--ylim', help='Y Axis Limits', nargs=2, type=float)
     parser.add_argument('-t','--title', help='Title for plots',default='')
     parser.add_argument('-s','--series', help='Variables to use as data series', nargs='+')
     parser.add_argument('--save', help='Save Plots', action='store_true')
