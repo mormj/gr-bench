@@ -11,15 +11,25 @@ echo ### Creating new CPU Sets
 
 if [ $NCORES == "2" ]
 then
-  sudo cset shield --sysset=system --userset=sdr --cpu=7,15 --kthread=on
+  sudo cset shield --sysset=system --userset=sdr --cpu=6,14 --kthread=on
   if [ $MAX_CPUFREQ != "0" ]
   then
+    echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+    echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu14/cpufreq/scaling_max_freq
+  fi
+elif [ $NCORES == "3" ]
+then
+  sudo cset shield --sysset=system --userset=sdr --cpu=4,7,15 --kthread=on
+  if [ $MAX_CPUFREQ != "0" ]
+  then
+    echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
     echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu7/cpufreq/scaling_max_freq
     echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu15/cpufreq/scaling_max_freq
   fi
 elif [ $NCORES == "4" ]
 then
   sudo cset shield --sysset=system --userset=sdr --cpu=6,7,14,15 --kthread=on
+  # sudo cset shield --sysset=system --userset=sdr --cpu=4,5,6,7 --kthread=on
   if [ $MAX_CPUFREQ != "0" ]
   then
     echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
