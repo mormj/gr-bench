@@ -106,8 +106,8 @@ def plot_results(args):
                 lgnd_str = lgnd_str[:-1] if lgnd_str[-1] == ',' else lgnd_str
                 lgnd.append(lgnd_str)
 
-                x = [float(d[args.xvar]) for d in series_filt]
-                y = [float(d[args.yvar]) for d in series_filt]
+                x = [float(d[args.xvar])  for d in series_filt if args.xvar in d and args.yvar in d]
+                y = [float(d[args.yvar])  for d in series_filt if args.xvar in d and args.yvar in d]
 
                 x_vals = list(np.unique(x))
                 y_mean = []
