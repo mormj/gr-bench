@@ -32,7 +32,7 @@ public:
      * class. bench::time_tag_injector::make is the public interface for
      * creating new instances.
      */
-    static sptr make(double interval, double offset_secs = 0);
+    static sptr make(double interval, unsigned long samp_rate);
 };
 
 } // namespace bench

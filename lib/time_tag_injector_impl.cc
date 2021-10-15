@@ -14,21 +14,22 @@ namespace bench {
 
 using input_type = gr_complex;
 using output_type = gr_complex;
-time_tag_injector::sptr time_tag_injector::make(double interval, double offset_secs)
+time_tag_injector::sptr time_tag_injector::make(double interval, unsigned long samp_rate)
 {
-    return gnuradio::make_block_sptr<time_tag_injector_impl>(interval, offset_secs);
+    return gnuradio::make_block_sptr<time_tag_injector_impl>(interval, samp_rate);
 }
 
 
 /*
  * The private constructor
  */
-time_tag_injector_impl::time_tag_injector_impl(double interval, double offset_secs)
+time_tag_injector_impl::time_tag_injector_impl(double interval, unsigned long samp_rate)
     : gr::sync_block("time_tag_injector",
                      gr::io_signature::make(
                          1, 1 , sizeof(input_type)),
                      gr::io_signature::make(
-                         1, 1, sizeof(output_type)))
+                         1, 1, sizeof(output_type))),
+                         d_samp_rate(samp_rate)
 {
     d_sample_period = std::chrono::duration<double>(interval);
 }
@@ -45,7 +46,7 @@ int time_tag_injector_impl::work(int noutput_items,
     const input_type* in = reinterpret_cast<const input_type*>(input_items[0]);
     output_type* out = reinterpret_cast<output_type*>(output_items[0]);
 
-
+    // The time at which the work function is called
     auto now = std::chrono::steady_clock::now();
     auto next_tag = d_start + d_sample_period;
 
@@ -56,9 +57,13 @@ int time_tag_injector_impl::work(int noutput_items,
         auto diff = std::chrono::duration_cast<std::chrono::microseconds>(
                         p1.time_since_epoch()).count();
 
-        std::cout << "adding tag at " << nitems_written(0) << " with val " << diff << std::endl;
+        // std::cout << "adding tag at " << nitems_written(0) + noutput_items / 2 << " with val " << diff << std::endl;
+        // add_item_tag(0,
+        //             nitems_written(0), // + noutput_items / 2,
+        //             pmt::string_to_symbol("time"),
+        //             pmt::from_long(diff));
         add_item_tag(0,
-                    nitems_written(0), // + noutput_items / 2,
+                    nitems_written(0) + noutput_items / 2,
                     pmt::string_to_symbol("time"),
                     pmt::from_long(diff));
         

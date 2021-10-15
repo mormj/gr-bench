@@ -33,6 +33,7 @@ latency_meas_sink_impl::latency_meas_sink_impl(unsigned int samp_rate, bool bloc
       d_blocking(blocking)
 {
     d_sample_period = std::chrono::duration<double>((double)1.0 / samp_rate);
+    std::cout << "d_samp_rate: " << d_samp_rate << std::endl;
 }
 
 /*
@@ -67,6 +68,7 @@ int latency_meas_sink_impl::work(int noutput_items,
         }
     }
 
+    now = std::chrono::system_clock::now();
     const input_type* in = reinterpret_cast<const input_type*>(input_items[0]);
 
     std::vector<tag_t> tags;
@@ -76,15 +78,17 @@ int latency_meas_sink_impl::work(int noutput_items,
         auto microseconds =
             std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch())
                 .count();
-        // std::cout << microseconds << std::endl;
-        auto diff = microseconds - pmt::to_long(t.value);
-        diff = diff + (int64_t)((1e6 * (t.offset - nitems_read(0))) / d_samp_rate);
-        d_latency_estimates.push_back(diff);
+        // std::cout << "received: " << microseconds << std::endl;
+        auto diff = microseconds - pmt::to_long(t.value); 
+        std::cout << d_samp_rate << " " << t.offset - nitems_read(0) << " " << 1e6 * (t.offset - nitems_read(0)) << " " << (1e6 * (t.offset - nitems_read(0))) / d_samp_rate << std::endl;
+        auto adjusted_diff = diff + (int64_t)((1e6 * (t.offset - nitems_read(0))) / d_samp_rate);
+        std::cout << "received: " << microseconds << " - " << pmt::to_long(t.value) << " = " << diff << " --> " << adjusted_diff << std::endl;
+        d_latency_estimates.push_back(adjusted_diff);
         d_num_latency++;
         auto a = 1.0 / (double)d_num_latency;
-        d_avg_latency = a * (double)diff  + (1.0 - a) * d_avg_latency;
+        d_avg_latency = a * (double)adjusted_diff  + (1.0 - a) * d_avg_latency;
 
-        std::cout << "time passed is " << diff << " microseconds" << std::endl;
+        // std::cout << "time passed is " << diff << " microseconds" << std::endl;
     }
 
     d_total_samples += noutput_items;

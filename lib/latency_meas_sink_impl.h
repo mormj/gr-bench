@@ -16,7 +16,7 @@ namespace bench {
 class latency_meas_sink_impl : public latency_meas_sink
 {
 private:
-    bool d_samp_rate;
+    unsigned int d_samp_rate;
     bool d_blocking = true;
 
     std::vector<int64_t> d_latency_estimates;

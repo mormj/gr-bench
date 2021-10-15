@@ -36,7 +36,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '320000'
+    value: '32000'
   states:
     bus_sink: false
     bus_source: false
@@ -73,7 +73,7 @@ blocks:
     comment: ''
     freq: '1000'
     maxoutbuf: '0'
-    minoutbuf: '1000000'
+    minoutbuf: '0'
     offset: '0'
     phase: '0'
     samp_rate: samp_rate
@@ -84,23 +84,6 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [72, 180.0]
-    rotation: 0
-    state: true
-- name: bench_time_tag_injector_0
-  id: bench_time_tag_injector
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    interval: '0.01'
-    maxoutbuf: '0'
-    minoutbuf: '1000000'
-    offset_secs: '0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [384, 212.0]
     rotation: 0
     state: true
 - name: blocks_throttle_0
@@ -122,6 +105,23 @@ blocks:
     coordinate: [600, 76.0]
     rotation: 0
     state: disabled
+- name: injector
+  id: bench_time_tag_injector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    interval: '0.01'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset_secs: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [296, 212.0]
+    rotation: 0
+    state: true
 - name: latency
   id: bench_latency_meas_sink
   parameters:
@@ -133,7 +133,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [768, 260.0]
+    coordinate: [584, 260.0]
     rotation: 0
     state: enabled
 - name: qtgui_histogram_sink_x_0
@@ -324,7 +324,7 @@ blocks:
   id: snippet
   parameters:
     alias: ''
-    code: print(f'LATENCY_AVG:{self.latency.avg_latency()}')
+    code: print(f'LATENCY_AVG:{self.latency.avg_latency()} microseconds')
     comment: ''
     priority: '0'
     section: main_after_stop
@@ -335,15 +335,32 @@ blocks:
     coordinate: [1000, 176.0]
     rotation: 0
     state: true
+- name: snippet_0_0
+  id: snippet
+  parameters:
+    alias: ''
+    code: 'self.injector.set_max_noutput_items(10)
+
+      self.latency.set_max_noutput_items(10)'
+    comment: ''
+    priority: '0'
+    section: main_after_init
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [888, 260.0]
+    rotation: 0
+    state: disabled
 
 connections:
 - [analog_fastnoise_source_x_0, '0', qtgui_histogram_sink_x_0, '0']
-- [analog_sig_source_x_0, '0', bench_time_tag_injector_0, '0']
-- [bench_time_tag_injector_0, '0', blocks_throttle_0, '0']
-- [bench_time_tag_injector_0, '0', latency, '0']
-- [bench_time_tag_injector_0, '0', qtgui_time_sink_x_0, '0']
+- [analog_sig_source_x_0, '0', injector, '0']
 - [blocks_throttle_0, '0', latency, '0']
 - [blocks_throttle_0, '0', qtgui_time_sink_x_0, '0']
+- [injector, '0', blocks_throttle_0, '0']
+- [injector, '0', latency, '0']
+- [injector, '0', qtgui_time_sink_x_0, '0']
 
 metadata:
   file_format: 1

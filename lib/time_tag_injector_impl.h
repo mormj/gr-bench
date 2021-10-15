@@ -18,11 +18,12 @@ namespace bench {
 class time_tag_injector_impl : public time_tag_injector
 {
 private:
+    unsigned long d_samp_rate;
     std::chrono::time_point<std::chrono::steady_clock> d_start;
     std::chrono::duration<double> d_sample_period;
 
 public:
-    time_tag_injector_impl(double interval, double offset_secs);
+    time_tag_injector_impl(double interval, unsigned long samp_rate);
     ~time_tag_injector_impl();
 
     // Where all the action really happens
