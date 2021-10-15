@@ -12,5 +12,7 @@ install(FILES
     bench_nop_head.block.yml
     bench_random_copy.block.yml
     bench_sequential_validate_sink.block.yml
-    bench_seqval_c.block.yml DESTINATION share/gnuradio/grc/blocks
+    bench_seqval_c.block.yml
+    bench_time_tag_injector.block.yml
+    bench_latency_meas_sink.block.yml DESTINATION share/gnuradio/grc/blocks
 )

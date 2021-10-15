@@ -1,0 +1,23 @@
+id: bench_time_tag_injector
+label: time tag injector
+category: '[Bench]'
+templates:
+  imports: import bench
+  make: bench.time_tag_injector(${interval}, ${offset_secs})
+parameters:
+- id: interval
+  label: Interval
+  dtype: real
+- id: offset_secs
+  label: Offset_secs
+  default: 0
+  dtype: real
+inputs:
+- label: in
+  domain: stream
+  dtype: complex
+outputs:
+- label: out
+  domain: stream
+  dtype: complex
+file_format: 1

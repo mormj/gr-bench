@@ -34,7 +34,9 @@ list(APPEND bench_python_files
     nop_head_python.cc
     random_copy_python.cc
     sequential_validate_sink_python.cc
-    seqval_c_python.cc python_bindings.cc)
+    seqval_c_python.cc
+    time_tag_injector_python.cc
+    latency_meas_sink_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(bench 
    ../..

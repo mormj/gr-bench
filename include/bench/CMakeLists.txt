@@ -17,5 +17,7 @@ install(FILES
     nop_head.h
     random_copy.h
     sequential_validate_sink.h
-    seqval_c.h DESTINATION include/bench
+    seqval_c.h
+    time_tag_injector.h
+    latency_meas_sink.h DESTINATION include/bench
 )

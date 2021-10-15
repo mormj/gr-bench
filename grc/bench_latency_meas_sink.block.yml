@@ -1,0 +1,15 @@
+id: bench_latency_meas_sink
+label: latency meas sink
+category: '[Bench]'
+templates:
+  imports: import bench
+  make: bench.latency_meas_sink(${samp_rate})
+parameters:
+- id: samp_rate
+  label: Samp_rate
+  dtype: int
+inputs:
+- label: in
+  domain: stream
+  dtype: complex
+file_format: 1

@@ -17,7 +17,9 @@ list(APPEND bench_sources
     nop_head_impl.cc
     random_copy_impl.cc
     sequential_validate_sink_impl.cc
-    seqval_c_impl.cc )
+    seqval_c_impl.cc
+    time_tag_injector_impl.cc
+    latency_meas_sink_impl.cc )
 
 set(bench_sources "${bench_sources}" PARENT_SCOPE)
 if(NOT bench_sources)
