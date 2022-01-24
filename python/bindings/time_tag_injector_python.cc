@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Free Software Foundation, Inc.
+ * Copyright 2022 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(time_tag_injector.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(a6b21b7cd395fde5e5bfb2c4fe8e0217)                     */
+/* BINDTOOL_HEADER_FILE_HASH(e267cc8bfbb4b32fd98d5c115dbe0cf2)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -38,7 +38,7 @@ void bind_time_tag_injector(py::module& m)
 
         .def(py::init(&time_tag_injector::make),
            py::arg("interval"),
-           py::arg("offset_secs") = 0,
+           py::arg("samp_rate"),
            D(time_tag_injector,make)
         )
         
