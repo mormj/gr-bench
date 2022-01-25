@@ -19,9 +19,15 @@
  static const char *__doc_gr_bench_msg_forward = R"doc()doc";
 
 
- static const char *__doc_gr_bench_msg_forward_msg_forward = R"doc()doc";
+ static const char *__doc_gr_bench_msg_forward_msg_forward_0 = R"doc()doc";
+
+
+ static const char *__doc_gr_bench_msg_forward_msg_forward_1 = R"doc()doc";
 
 
  static const char *__doc_gr_bench_msg_forward_make = R"doc()doc";
+
+
+ static const char *__doc_gr_bench_msg_forward_message_count = R"doc()doc";
 
   

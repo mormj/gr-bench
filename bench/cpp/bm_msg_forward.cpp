@@ -82,11 +82,11 @@ int main(int argc, char* argv[])
         //     std::cout << "nout_avg: " << msg_blks[i]->pc_noutput_items_avg() << std::endl;
         // }
 
-        for (auto& b : msg_blks)
-        {
-            std::cout << b->message_count() << ", ";
-        }
-        std::cout << std::endl;
+        // for (auto& b : msg_blks)
+        // {
+        //     std::cout << b->message_count() << ", ";
+        // }
+        // std::cout << std::endl;
         
     }
 }

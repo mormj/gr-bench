@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(msg_forward.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(ef8c7fdfbdff5479046a066bc2eece8b)                     */
+/* BINDTOOL_HEADER_FILE_HASH(19231a08ad0e8a6f15ff65833f343f9e)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -42,6 +42,12 @@ void bind_msg_forward(py::module& m)
         
 
 
+
+
+        
+        .def("message_count",&msg_forward::message_count,       
+            D(msg_forward,message_count)
+        )
 
         ;
 
