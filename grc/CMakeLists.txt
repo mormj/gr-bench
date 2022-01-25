@@ -14,5 +14,6 @@ install(FILES
     bench_sequential_validate_sink.block.yml
     bench_seqval_c.block.yml
     bench_time_tag_injector.block.yml
-    bench_latency_meas_sink.block.yml DESTINATION share/gnuradio/grc/blocks
+    bench_latency_meas_sink.block.yml
+    bench_msg_forward.block.yml DESTINATION share/gnuradio/grc/blocks
 )

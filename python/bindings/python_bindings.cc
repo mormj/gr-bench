@@ -30,6 +30,7 @@ void bind_extract_burst(py::module& m);
     void bind_seqval_c(py::module& m);
     void bind_time_tag_injector(py::module& m);
     void bind_latency_meas_sink(py::module& m);
+    void bind_msg_forward(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -67,5 +68,6 @@ PYBIND11_MODULE(bench_python, m)
     bind_seqval_c(m);
     bind_time_tag_injector(m);
     bind_latency_meas_sink(m);
+    bind_msg_forward(m);
     // ) END BINDING_FUNCTION_CALLS
 }

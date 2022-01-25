@@ -50,3 +50,14 @@ target_link_libraries(bm_pmt_dict_pack_unpack
   gnuradio::gnuradio-runtime
   # gnuradio::gnuradio-pmt
   )  
+
+add_executable(bm_msg_forward bm_msg_forward.cpp)
+target_include_directories(bm_msg_forward
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
+  PUBLIC $<INSTALL_INTERFACE:include>
+)
+target_link_libraries(bm_msg_forward
+  gnuradio::gnuradio-runtime
+  gnuradio::gnuradio-blocks
+  gnuradio-bench
+  )

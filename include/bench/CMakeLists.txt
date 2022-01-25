@@ -19,5 +19,6 @@ install(FILES
     sequential_validate_sink.h
     seqval_c.h
     time_tag_injector.h
-    latency_meas_sink.h DESTINATION include/bench
+    latency_meas_sink.h
+    msg_forward.h DESTINATION include/bench
 )

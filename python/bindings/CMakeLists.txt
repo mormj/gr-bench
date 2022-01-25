@@ -36,7 +36,8 @@ list(APPEND bench_python_files
     sequential_validate_sink_python.cc
     seqval_c_python.cc
     time_tag_injector_python.cc
-    latency_meas_sink_python.cc python_bindings.cc)
+    latency_meas_sink_python.cc
+    msg_forward_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(bench 
    ../..
