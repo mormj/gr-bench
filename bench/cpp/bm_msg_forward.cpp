@@ -21,12 +21,12 @@ int main(int argc, char* argv[])
     po::options_description desc("Basic Test Flow Graph");
     desc.add_options()("help,h", "display help")(
         "samples",
-        po::value<uint64_t>(&samples)->default_value(1000),
+        po::value<uint64_t>(&samples)->default_value(10000),
         "Number of bursts")(
         "pdu_size",
-        po::value<uint64_t>(&pdu_size)->default_value(5000),
+        po::value<uint64_t>(&pdu_size)->default_value(100),
         "Size of packet")(
-        "nblocks", po::value<int>(&nblocks)->default_value(50), "Number of nop blocks")(
+        "nblocks", po::value<int>(&nblocks)->default_value(40), "Number of nop blocks")(
         "rt_prio", "Enable Real-time priority");
 
     po::variables_map vm;
