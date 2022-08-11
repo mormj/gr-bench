@@ -19,11 +19,6 @@ from gnuradio import eng_notation
 from gnuradio.fft import window
 from gnuradio import fft
 import time
-import trt
-import json
-import datetime
-import itertools
-import bench
 from gnuradio.filter import pfb
 
 

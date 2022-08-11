@@ -18,11 +18,6 @@ from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
 from gnuradio.fft import window
 import time
-import trt
-import json
-import datetime
-import itertools
-
 
 class benchmark_copy(gr.top_block):
 

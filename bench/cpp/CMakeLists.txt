@@ -61,3 +61,15 @@ target_link_libraries(bm_msg_forward
   gnuradio::gnuradio-blocks
   gnuradio-bench
   )
+
+
+add_executable(bm_pdu_process bm_pdu_process.cpp)
+target_include_directories(bm_pdu_process
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
+  PUBLIC $<INSTALL_INTERFACE:include>
+)
+target_link_libraries(bm_pdu_process
+  gnuradio::gnuradio-runtime
+  gnuradio::gnuradio-blocks
+  gnuradio-bench
+  )

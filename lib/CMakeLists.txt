@@ -20,7 +20,8 @@ list(APPEND bench_sources
     seqval_c_impl.cc
     time_tag_injector_impl.cc
     latency_meas_sink_impl.cc
-    msg_forward_impl.cc )
+    msg_forward_impl.cc
+    pdu_process_impl.cc )
 
 set(bench_sources "${bench_sources}" PARENT_SCOPE)
 if(NOT bench_sources)

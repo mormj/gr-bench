@@ -7,6 +7,7 @@ namespace po = boost::program_options;
 #include <gnuradio/realtime.h>
 #include <gnuradio/top_block.h>
 #include <bench/msg_forward.h>
+#include <thread>
 
 using namespace gr;
 
@@ -65,6 +66,7 @@ int main(int argc, char* argv[])
             pmt::pmt_t msg = pmt::cons(pmt::PMT_NIL, pmt::make_u8vector(pdu_size, 0x42));
             msg_blks[0]->post(pmt::mp("in"), msg);
         }
+
         pmt::pmt_t msg = pmt::cons(pmt::intern("done"), pmt::from_long(1));
         msg_blks[0]->post(pmt::mp("system"), msg);
 

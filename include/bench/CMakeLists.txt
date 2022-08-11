@@ -20,5 +20,6 @@ install(FILES
     seqval_c.h
     time_tag_injector.h
     latency_meas_sink.h
-    msg_forward.h DESTINATION include/bench
+    msg_forward.h
+    pdu_process.h DESTINATION include/bench
 )

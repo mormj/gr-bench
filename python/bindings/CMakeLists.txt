@@ -37,7 +37,9 @@ list(APPEND bench_python_files
     seqval_c_python.cc
     time_tag_injector_python.cc
     latency_meas_sink_python.cc
-    msg_forward_python.cc python_bindings.cc)
+    msg_forward_python.cc
+    # pdu_process_python.cc 
+    python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(bench 
    ../..

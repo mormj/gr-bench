@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 
 plt_num = 0
 colors = plt.get_cmap("tab10")
+linespec = ['solid','dashed','dashdot',(0, (3, 1, 1, 1))]
 
 def plot_results(args):
     
@@ -96,6 +97,7 @@ def plot_results(args):
             coloridx = 0
             for b in itertools.product(*svals):
                 color = colors(coloridx)
+                thislinespec=linespec[coloridx%len(linespec)]
                 series_filt = filt_data
                 
                 lgnd_str = ''
@@ -120,7 +122,7 @@ def plot_results(args):
                     y_at_val = [y[i] for i in idx_at_val]
                     y_mean.append(np.mean(y_at_val))
 
-                h, = plt.plot(x_vals, y_mean)
+                h, = plt.plot(x_vals, y_mean, color=color, linestyle=thislinespec)
                 lgnd_handles.append(h)
                 coloridx += 1
 
