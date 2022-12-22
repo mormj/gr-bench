@@ -133,6 +133,7 @@ endif(APPLE)
 # Find gnuradio build dependencies
 ########################################################################
 find_package(Doxygen)
+find_package(Boost COMPONENTS program_options)
 
 ########################################################################
 # PyBind11 Related

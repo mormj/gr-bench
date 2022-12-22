@@ -7,6 +7,7 @@ target_link_libraries(bm_nop
   gnuradio::gnuradio-runtime
   gnuradio::gnuradio-blocks
   gnuradio-bench
+  Boost::program_options
   )
 
 add_executable(bm_copy bm_copy.cpp)
@@ -18,6 +19,7 @@ target_link_libraries(bm_copy
   gnuradio::gnuradio-runtime
   gnuradio::gnuradio-blocks
   gnuradio-bench
+  Boost::program_options
   )
 
 add_executable(bm_pmt_serialize_uvec bm_pmt_serialize_uvec.cpp)
@@ -28,6 +30,7 @@ target_include_directories(bm_pmt_serialize_uvec
 target_link_libraries(bm_pmt_serialize_uvec
   gnuradio::gnuradio-runtime
   # gnuradio::gnuradio-pmt
+  Boost::program_options
   )
 
 add_executable(bm_pmt_dict_ref bm_pmt_dict_ref.cpp)
@@ -38,6 +41,7 @@ target_include_directories(bm_pmt_dict_ref
 target_link_libraries(bm_pmt_dict_ref
   gnuradio::gnuradio-runtime
   # gnuradio::gnuradio-pmt
+  Boost::program_options
   )
 
 
@@ -49,6 +53,7 @@ target_include_directories(bm_pmt_dict_pack_unpack
 target_link_libraries(bm_pmt_dict_pack_unpack
   gnuradio::gnuradio-runtime
   # gnuradio::gnuradio-pmt
+  Boost::program_options
   )  
 
 add_executable(bm_msg_forward bm_msg_forward.cpp)
@@ -59,6 +64,7 @@ target_include_directories(bm_msg_forward
 target_link_libraries(bm_msg_forward
   gnuradio::gnuradio-runtime
   gnuradio::gnuradio-blocks
+  Boost::program_options
   gnuradio-bench
   )
 
@@ -72,4 +78,5 @@ target_link_libraries(bm_pdu_process
   gnuradio::gnuradio-runtime
   gnuradio::gnuradio-blocks
   gnuradio-bench
+  Boost::program_options
   )
