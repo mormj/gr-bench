@@ -15,10 +15,10 @@
  */
 
 
-static const char* __doc_gr_bench_nop = R"doc()doc";
+static const char* __doc_gr_bench_head_null_sink = R"doc()doc";
 
 
-static const char* __doc_gr_bench_nop_nop = R"doc()doc";
+static const char* __doc_gr_bench_head_null_sink_head_null_sink = R"doc()doc";
 
 
-static const char* __doc_gr_bench_nop_make = R"doc()doc";
+static const char* __doc_gr_bench_head_null_sink_make = R"doc()doc";

@@ -37,3 +37,6 @@ GR_ADD_TEST(qa_sequential_validate_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOU
 GR_ADD_TEST(qa_seqval_c ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_seqval_c.py)
 GR_ADD_TEST(qa_msg_forward ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_msg_forward.py)
 GR_ADD_TEST(qa_pdu_process ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_pdu_process.py)
+GR_ADD_TEST(qa_head_null_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_head_null_sink.py)
+GR_ADD_TEST(qa_nop_latency_source ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_nop_latency_source.py)
+GR_ADD_TEST(qa_head_nop_latency_sink ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_head_nop_latency_sink.py)

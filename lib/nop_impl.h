@@ -16,10 +16,10 @@ namespace bench {
 class nop_impl : public nop
 {
 private:
-    // Nothing to declare in this block.
+    size_t _nproduce;
 
 public:
-    nop_impl(size_t sizeof_stream_item);
+    nop_impl(size_t sizeof_stream_item, size_t nproduce=0);
     ~nop_impl() override;
 
     // Where all the action really happens

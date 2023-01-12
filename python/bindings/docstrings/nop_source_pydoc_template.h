@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Free Software Foundation, Inc.
+ * Copyright 2022 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -7,7 +7,7 @@
  *
  */
 #include "pydoc_macros.h"
-#define D(...) DOC(gr,bench, __VA_ARGS__ )
+#define D(...) DOC(gr, bench, __VA_ARGS__)
 /*
   This file contains placeholders for docstrings for the Python bindings.
   Do not edit! These were automatically extracted during the binding process
@@ -15,13 +15,10 @@
  */
 
 
- 
- static const char *__doc_gr_bench_nop_source = R"doc()doc";
+static const char* __doc_gr_bench_nop_source = R"doc()doc";
 
 
- static const char *__doc_gr_bench_nop_source_nop_source = R"doc()doc";
+static const char* __doc_gr_bench_nop_source_nop_source = R"doc()doc";
 
 
- static const char *__doc_gr_bench_nop_source_make = R"doc()doc";
-
-  
+static const char* __doc_gr_bench_nop_source_make = R"doc()doc";

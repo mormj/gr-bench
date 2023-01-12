@@ -38,8 +38,10 @@ list(APPEND bench_python_files
     time_tag_injector_python.cc
     latency_meas_sink_python.cc
     msg_forward_python.cc
-    # pdu_process_python.cc 
-    python_bindings.cc)
+    # pdu_process_python.cc
+    head_null_sink_python.cc
+    nop_latency_source_python.cc
+    head_nop_latency_sink_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(bench 
    ../..

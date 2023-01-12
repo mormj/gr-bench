@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Free Software Foundation, Inc.
+ * Copyright 2023 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -13,8 +13,8 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(nop_source.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(d25bc04a2c991c2c7a1c1d6c9bd5be43)                     */
+/* BINDTOOL_HEADER_FILE(nop_latency_source.h)                                        */
+/* BINDTOOL_HEADER_FILE_HASH(88816d751ad6b5d5ae4bc1309150685a)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -23,26 +23,30 @@
 
 namespace py = pybind11;
 
-#include <bench/nop_source.h>
+#include <bench/nop_latency_source.h>
 // pydoc.h is automatically generated in the build directory
-#include <nop_source_pydoc.h>
+#include <nop_latency_source_pydoc.h>
 
-void bind_nop_source(py::module& m)
+void bind_nop_latency_source(py::module& m)
 {
 
-    using nop_source = ::gr::bench::nop_source;
+    using nop_latency_source = ::gr::bench::nop_latency_source;
 
 
-    py::class_<nop_source,
+    py::class_<nop_latency_source,
                gr::sync_block,
                gr::block,
                gr::basic_block,
-               std::shared_ptr<nop_source>>(m, "nop_source", D(nop_source))
+               std::shared_ptr<nop_latency_source>>(
+        m, "nop_latency_source", D(nop_latency_source))
 
-        .def(py::init(&nop_source::make),
+        .def(py::init(&nop_latency_source::make),
              py::arg("sizeof_stream_item"),
+             py::arg("timestamp_pathname"),
+             py::arg("period"),
+             py::arg("offset") = 0,
              py::arg("nproduce") = 0,
-             D(nop_source, make))
+             D(nop_latency_source, make))
 
 
         ;

@@ -11,16 +11,18 @@
 namespace gr {
 namespace bench {
 
-nop_source::sptr nop_source::make(size_t sizeof_stream_item)
+nop_source::sptr nop_source::make(size_t sizeof_stream_item, size_t nproduce)
 {
-    return gnuradio::make_block_sptr<nop_source_impl>(sizeof_stream_item);
+    return gnuradio::make_block_sptr<nop_source_impl>(sizeof_stream_item, nproduce);
 }
 
-nop_source_impl::nop_source_impl(size_t sizeof_stream_item)
+nop_source_impl::nop_source_impl(size_t sizeof_stream_item, size_t nproduce)
     : sync_block("nop_source",
                  io_signature::make(0, 0, 0),
-                 io_signature::make(1, -1, sizeof_stream_item))
+                 io_signature::make(1, -1, sizeof_stream_item)), _nproduce(nproduce)
 {
+    if (_nproduce)
+        set_output_multiple(_nproduce);
 }
 
 nop_source_impl::~nop_source_impl() {}
@@ -34,7 +36,7 @@ int nop_source_impl::work(int noutput_items,
     //     optr = (void*)output_items[n];
     //     memset(optr, 0, noutput_items * output_signature()->sizeof_stream_item(n));
     // }
-    return noutput_items;
+    return (_nproduce ? _nproduce : noutput_items);
 }
 } /* namespace bench */
 } /* namespace gr */

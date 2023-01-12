@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Free Software Foundation, Inc.
+ * Copyright 2022 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(nop.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(c342d804db9727c99f886c2e35ab4218)                     */
+/* BINDTOOL_HEADER_FILE_HASH(ec8d05bc77ba4d145215cabffd273983)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -30,31 +30,17 @@ namespace py = pybind11;
 void bind_nop(py::module& m)
 {
 
-    using nop    = ::gr::bench::nop;
+    using nop = ::gr::bench::nop;
 
 
-    py::class_<nop, gr::sync_block, gr::block, gr::basic_block,
-        std::shared_ptr<nop>>(m, "nop", D(nop))
+    py::class_<nop, gr::sync_block, gr::block, gr::basic_block, std::shared_ptr<nop>>(
+        m, "nop", D(nop))
 
         .def(py::init(&nop::make),
-           py::arg("sizeof_stream_item"),
-           D(nop,make)
-        )
-        
-
+             py::arg("sizeof_stream_item"),
+             py::arg("nproduce") = 0,
+             D(nop, make))
 
 
         ;
-
-
-
-
 }
-
-
-
-
-
-
-
-

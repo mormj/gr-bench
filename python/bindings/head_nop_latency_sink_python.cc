@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Free Software Foundation, Inc.
+ * Copyright 2023 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -13,8 +13,8 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(nop_source.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(d25bc04a2c991c2c7a1c1d6c9bd5be43)                     */
+/* BINDTOOL_HEADER_FILE(head_nop_latency_sink.h)                                        */
+/* BINDTOOL_HEADER_FILE_HASH(0d427af904a69b6942e08e2ceb3b760e)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -23,26 +23,30 @@
 
 namespace py = pybind11;
 
-#include <bench/nop_source.h>
+#include <bench/head_nop_latency_sink.h>
 // pydoc.h is automatically generated in the build directory
-#include <nop_source_pydoc.h>
+#include <head_nop_latency_sink_pydoc.h>
 
-void bind_nop_source(py::module& m)
+void bind_head_nop_latency_sink(py::module& m)
 {
 
-    using nop_source = ::gr::bench::nop_source;
+    using head_nop_latency_sink = ::gr::bench::head_nop_latency_sink;
 
 
-    py::class_<nop_source,
+    py::class_<head_nop_latency_sink,
                gr::sync_block,
                gr::block,
                gr::basic_block,
-               std::shared_ptr<nop_source>>(m, "nop_source", D(nop_source))
+               std::shared_ptr<head_nop_latency_sink>>(
+        m, "head_nop_latency_sink", D(head_nop_latency_sink))
 
-        .def(py::init(&nop_source::make),
+        .def(py::init(&head_nop_latency_sink::make),
              py::arg("sizeof_stream_item"),
-             py::arg("nproduce") = 0,
-             D(nop_source, make))
+             py::arg("nitems"),
+             py::arg("timestamp_pathname"),
+             py::arg("period"),
+             py::arg("offset") = 0,
+             D(head_nop_latency_sink, make))
 
 
         ;

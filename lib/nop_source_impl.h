@@ -15,8 +15,10 @@ namespace bench {
 
 class nop_source_impl : public nop_source
 {
+private:
+    size_t _nproduce;
 public:
-    nop_source_impl(size_t sizeof_stream_item);
+    nop_source_impl(size_t sizeof_stream_item, size_t nproduce=0);
     ~nop_source_impl() override;
 
     int work(int noutput_items,

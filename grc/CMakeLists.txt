@@ -16,5 +16,8 @@ install(FILES
     bench_time_tag_injector.block.yml
     bench_latency_meas_sink.block.yml
     bench_msg_forward.block.yml
-    bench_pdu_process.block.yml DESTINATION share/gnuradio/grc/blocks
+    bench_pdu_process.block.yml
+    bench_head_null_sink.block.yml
+    bench_nop_latency_source.block.yml
+    bench_head_nop_latency_sink.block.yml DESTINATION share/gnuradio/grc/blocks
 )

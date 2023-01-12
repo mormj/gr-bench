@@ -21,5 +21,8 @@ install(FILES
     time_tag_injector.h
     latency_meas_sink.h
     msg_forward.h
-    pdu_process.h DESTINATION include/bench
+    pdu_process.h
+    head_null_sink.h
+    nop_latency_source.h
+    head_nop_latency_sink.h DESTINATION include/bench
 )

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Free Software Foundation, Inc.
+ * Copyright 2023 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -15,10 +15,10 @@
  */
 
 
-static const char* __doc_gr_bench_nop = R"doc()doc";
+static const char* __doc_gr_bench_nop_latency_source = R"doc()doc";
 
 
-static const char* __doc_gr_bench_nop_nop = R"doc()doc";
+static const char* __doc_gr_bench_nop_latency_source_nop_latency_source = R"doc()doc";
 
 
-static const char* __doc_gr_bench_nop_make = R"doc()doc";
+static const char* __doc_gr_bench_nop_latency_source_make = R"doc()doc";

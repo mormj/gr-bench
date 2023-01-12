@@ -32,7 +32,7 @@ public:
      * class. bench::nop::make is the public interface for
      * creating new instances.
      */
-    static sptr make(size_t sizeof_stream_item);
+    static sptr make(size_t sizeof_stream_item, size_t nproduce=0);
 };
 
 } // namespace bench

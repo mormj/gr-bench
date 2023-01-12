@@ -13,8 +13,8 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(nop_source.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(d25bc04a2c991c2c7a1c1d6c9bd5be43)                     */
+/* BINDTOOL_HEADER_FILE(head_null_sink.h)                                        */
+/* BINDTOOL_HEADER_FILE_HASH(0161763037be68289c076f1bcffbe210)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -23,26 +23,26 @@
 
 namespace py = pybind11;
 
-#include <bench/nop_source.h>
+#include <bench/head_null_sink.h>
 // pydoc.h is automatically generated in the build directory
-#include <nop_source_pydoc.h>
+#include <head_null_sink_pydoc.h>
 
-void bind_nop_source(py::module& m)
+void bind_head_null_sink(py::module& m)
 {
 
-    using nop_source = ::gr::bench::nop_source;
+    using head_null_sink = ::gr::bench::head_null_sink;
 
 
-    py::class_<nop_source,
+    py::class_<head_null_sink,
                gr::sync_block,
                gr::block,
                gr::basic_block,
-               std::shared_ptr<nop_source>>(m, "nop_source", D(nop_source))
+               std::shared_ptr<head_null_sink>>(m, "head_null_sink", D(head_null_sink))
 
-        .def(py::init(&nop_source::make),
+        .def(py::init(&head_null_sink::make),
              py::arg("sizeof_stream_item"),
-             py::arg("nproduce") = 0,
-             D(nop_source, make))
+             py::arg("nitems"),
+             D(head_null_sink, make))
 
 
         ;
