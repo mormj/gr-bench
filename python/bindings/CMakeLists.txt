@@ -41,7 +41,8 @@ list(APPEND bench_python_files
     # pdu_process_python.cc
     head_null_sink_python.cc
     nop_latency_source_python.cc
-    head_nop_latency_sink_python.cc python_bindings.cc)
+    head_nop_latency_sink_python.cc
+    copy_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(bench 
    ../..

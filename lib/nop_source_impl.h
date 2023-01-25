@@ -16,6 +16,7 @@ namespace bench {
 class nop_source_impl : public nop_source
 {
 private:
+    size_t _itemsize;
     size_t _nproduce;
 public:
     nop_source_impl(size_t sizeof_stream_item, size_t nproduce=0);

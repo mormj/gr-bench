@@ -24,5 +24,6 @@ install(FILES
     pdu_process.h
     head_null_sink.h
     nop_latency_source.h
-    head_nop_latency_sink.h DESTINATION include/bench
+    head_nop_latency_sink.h
+    copy.h DESTINATION include/bench
 )

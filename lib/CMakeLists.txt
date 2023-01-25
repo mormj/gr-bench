@@ -24,7 +24,8 @@ list(APPEND bench_sources
     pdu_process_impl.cc
     head_null_sink_impl.cc
     nop_latency_source_impl.cc
-    head_nop_latency_sink_impl.cc )
+    head_nop_latency_sink_impl.cc
+    copy_impl.cc )
 
 set(bench_sources "${bench_sources}" PARENT_SCOPE)
 if(NOT bench_sources)

@@ -35,6 +35,7 @@ void bind_extract_burst(py::module& m);
     void bind_head_null_sink(py::module& m);
     void bind_nop_latency_source(py::module& m);
     void bind_head_nop_latency_sink(py::module& m);
+    void bind_copy(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -77,5 +78,6 @@ PYBIND11_MODULE(bench_python, m)
     bind_head_null_sink(m);
     bind_nop_latency_source(m);
     bind_head_nop_latency_sink(m);
+    bind_copy(m);
     // ) END BINDING_FUNCTION_CALLS
 }

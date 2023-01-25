@@ -14,6 +14,7 @@ namespace po = boost::program_options;
 #include <gnuradio/top_block.h>
 #include <bench/head_null_sink.h>
 #include <bench/nop.h>
+#include <bench/copy.h>
 #include <bench/nop_source.h>
 
 using namespace gr;
@@ -24,16 +25,18 @@ int main(int argc, char* argv[])
     uint64_t samples, itemsize;
     bool rt_prio = false;
     uint64_t N1, N2, N3;
+    bool use_memcpy = true;
 
     // clang-format off
     po::options_description desc("Basic Test Flow Graph");
     desc.add_options()("help,h", "display help")
        ("samples", po::value<uint64_t>(&samples)->default_value(1000000000),"Number of samples")
-       ("itemsize", po::value<uint64_t>(&itemsize)->default_value(8),"itemsize")
+       ("itemsize", po::value<uint64_t>(&itemsize)->default_value(sizeof(float)),"itemsize")
        ("N1", po::value<uint64_t>(&N1)->default_value(8192),"N1")
        ("N2", po::value<uint64_t>(&N2)->default_value(8192),"N2")
        ("N3", po::value<uint64_t>(&N3)->default_value(8192),"N3")
-       ("rt_prio", "Enable Real-time priority");
+       ("rt_prio", "Enable Real-time priority")
+       ("no_memcpy", "don't use memcpy");
     // clang-format on
 
     po::variables_map vm;
@@ -49,6 +52,9 @@ int main(int argc, char* argv[])
         rt_prio = true;
     }
 
+    if (vm.count("no_memcpy")) {
+        use_memcpy = false;
+    }
 
     if (rt_prio && gr::enable_realtime_scheduling() != RT_OK) {
         std::cout << "Error: failed to enable real-time scheduling." << std::endl;
@@ -58,9 +64,9 @@ int main(int argc, char* argv[])
         auto src = bench::nop_source::make(itemsize, N1);
         auto snk = bench::head_null_sink::make(itemsize, samples);
 
-        auto b1 = bench::nop::make(itemsize, N2);
-        auto b2 = bench::nop::make(itemsize, N1);
-        auto b3 = bench::nop::make(itemsize, N3);
+        auto b1 = bench::copy::make(itemsize, use_memcpy, N2);
+        auto b2 = bench::copy::make(itemsize, use_memcpy, N1);
+        auto b3 = bench::copy::make(itemsize, use_memcpy, N3);
 
         // src->set_max_output_buffer(0, 4096);
         // b1->set_max_output_buffer(0, 4096);

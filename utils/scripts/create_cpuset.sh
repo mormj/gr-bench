@@ -9,14 +9,21 @@ sudo cset -m set | grep ";" | grep -v root | cut -d ";" -f1 | xargs -n1 sudo cse
 echo ### Creating new CPU Sets
 # sudo cset shield --sysset=system --userset=sdr --cpu=2,6,3,7 --kthread=on
 
-if [ $NCORES == "2" ]
+if [ $NCORES == "1" ]
+then
+  sudo cset shield --sysset=system --userset=sdr --cpu=6 --kthread=on
+  if [ $MAX_CPUFREQ != "0" ]
+  then
+    echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
+  fi
+elif [ $NCORES == "2" ]
 then
   sudo cset shield --sysset=system --userset=sdr --cpu=6,14 --kthread=on
   if [ $MAX_CPUFREQ != "0" ]
   then
     echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu6/cpufreq/scaling_max_freq
     echo $MAX_CPUFREQ | sudo tee /sys/devices/system/cpu/cpu14/cpufreq/scaling_max_freq
-  fi
+  fi  
 elif [ $NCORES == "3" ]
 then
   sudo cset shield --sysset=system --userset=sdr --cpu=4,7,15 --kthread=on
